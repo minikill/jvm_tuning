@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.example</groupId>
+  <artifactId>jvm_tuning</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <java-version>16</java-version>
+    <scopt-version>3.7.1</scopt-version>
+    <spark-version>3.0.2</spark-version>
+    <scala-version>2.12.12</scala-version>
+    <pureconfig-version>0.13.0</pureconfig-version>
+
+    <scala-compat-version>2.12</scala-compat-version>
+    <maven.compiler.source>16</maven.compiler.source>
+    <maven.compiler.target>16</maven.compiler.target>
+    <maven-compiler-plugin-version>2.3.2</maven-compiler-plugin-version>
+  </properties>
+
+  <dependencies>
+    <!-- Scala dependency -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala-version}</version>
+    </dependency>
+
+    <!-- Spark dependency -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala-compat-version}</artifactId>
+      <version>${spark-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-avro_${scala-compat-version}</artifactId>
+      <version>${spark-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.pureconfig</groupId>
+      <artifactId>pureconfig_${scala-compat-version}</artifactId>
+      <version>${pureconfig-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.scopt</groupId>
+      <artifactId>scopt_${scala-compat-version}</artifactId>
+      <version>${scopt-version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin-version}</version>
+        <configuration>
+          <source>16</source>
+          <target>16</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
