@@ -3,6 +3,7 @@ package inc.sad.app
 import inc.sad.services.{ConfigService, SparkService}
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.functions.count
+import org.apache.spark.storage.StorageLevel
 
 object BatchProcessingApplication extends App with Logging {
 
@@ -17,12 +18,15 @@ object BatchProcessingApplication extends App with Logging {
 
   val df = spark
     .read
-    .textFile(config.inputUrl)
+    .textFile(config.appConfig.inputUrl)
     .flatMap(line => line.split(" "))
-    .groupBy("value")
+    .persist(StorageLevel.OFF_HEAP)
+
+  df.groupBy("value")
     .agg(count("value").alias("count"))
+    .coalesce(10)
     .write
-    .parquet(config.outputUrl)
+    .parquet(config.appConfig.outputUrl)
 
   logInfo(s"Job successfully finished")
 

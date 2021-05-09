@@ -9,15 +9,18 @@
   <version>1.0-SNAPSHOT</version>
 
   <properties>
-    <java-version>16</java-version>
+    <java-version>11</java-version>
     <scopt-version>3.7.1</scopt-version>
     <spark-version>3.0.2</spark-version>
     <scala-version>2.12.12</scala-version>
+    <aws-java-sdk-version>1.11.1015</aws-java-sdk-version>
+    <hadoop-aws-version>3.3.0</hadoop-aws-version>
     <pureconfig-version>0.13.0</pureconfig-version>
 
     <scala-compat-version>2.12</scala-compat-version>
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
+    <scala-maven-plugin-version>4.1.0</scala-maven-plugin-version>
     <maven-compiler-plugin-version>2.3.2</maven-compiler-plugin-version>
   </properties>
 
@@ -35,11 +38,18 @@
       <artifactId>spark-sql_${scala-compat-version}</artifactId>
       <version>${spark-version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-avro_${scala-compat-version}</artifactId>
-      <version>${spark-version}</version>
-    </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.amazonaws</groupId>-->
+<!--      <artifactId>aws-java-sdk</artifactId>-->
+<!--      <version>${aws-java-sdk-version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>org.apache.hadoop</groupId>-->
+<!--      <artifactId>hadoop-aws</artifactId>-->
+<!--      <version>${hadoop-aws-version}</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.github.pureconfig</groupId>
@@ -60,11 +70,51 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin-version}</version>
+        <version>3.8.1</version>
         <configuration>
-          <source>16</source>
-          <target>16</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala-maven-plugin-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sourceDir>src/main/scala</sourceDir>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
+
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

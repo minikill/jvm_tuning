@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spark-application
+spec:
+  containers:
+    - name: spark-kubernetes-executor
+      image: placeholder
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: application-conf
+          mountPath: /etc/application_conf
+        - name: spark-conf
+          mountPath: /etc/spark_conf
+  volumes:
+    - name: application-conf
+      configMap:
+        name: application-configmap
+    - name: spark-conf
+      configMap:
+        name: spark-configmap
+  restartPolicy: Never

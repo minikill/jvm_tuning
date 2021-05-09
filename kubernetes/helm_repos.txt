@@ -1,0 +1,2 @@
+minio https://operator.min.io/
+prometheus https://prometheus-community.github.io/prometheus-operator

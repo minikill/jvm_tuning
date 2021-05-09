@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-configmap
+data:
+  application.conf: |+
+    input-url = "s3a://data/src/"
+    output-url = "s3a://data/trg/"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spark-configmap
+data:
+  spark.conf: |+
+    master-url = "local"
+    spark-config-map = {
+      "spark.hadoop.fs.s3a.endpoint": "http://minio-service:9000"
+      "spark.hadoop.fs.s3a.impl": "org.apache.hadoop.fs.s3a.S3AFileSystem"
+      "spark.hadoop.fs.s3a.access.key"="minio"
+      "spark.hadoop.fs.s3a.secret.key"="minio123"
+    }
